@@ -1,4 +1,4 @@
-package dent.dent;
+package prueba.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
