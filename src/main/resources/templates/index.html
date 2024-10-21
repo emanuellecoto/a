@@ -17,12 +17,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         }
 
         html, body {
-            height: 100%; /* Asegura que html y body ocupen el 100% de la altura */
+            height: 100%; 
         }
 
         body {
-            display: flex; /* Usar flexbox */
-            flex-direction: column; /* Organizar elementos en una columna */
+            display: flex; 
+            flex-direction: column;
+
+        .dropdown-item {
+            transition: background-color 0.3s ease; 
+        }
+
+        .dropdown-item:hover {
+            background-color: gray; 
+            color: white; 
+        }
+
+        .dropdown-item.selected {
+            background-color: #0056b3;
+            color: white;
         }
 
     </style>

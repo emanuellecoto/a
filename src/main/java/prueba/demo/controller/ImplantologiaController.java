@@ -8,13 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-@RequestMapping ("/contactenos")
+@RequestMapping("servicios")
 @Controller
-public class ContactenosController {
-    @GetMapping ("/contactenos")
-    public String contactenos(){
-        return "/contactenos/contactenos";
+public class ImplantologiaController {
+    @GetMapping("implantologia")
+    public String implantologia(){
+        return "/servicios/implantologia";
     }
-    
 }
