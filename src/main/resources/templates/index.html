@@ -8,14 +8,36 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <head th:replace="~{layout/plantilla :: head}">
 
     </head>
-        <body>
-            <header th:replace="~{layout/plantilla :: header}" >
-                
-            </header>
-            
-            <section th:replace="~{layout/plantilla :: home}">
-                
-            </section>
+    <style>
+        /* Reiniciar estilos por defecto */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        </body>
+        html, body {
+            height: 100%; /* Asegura que html y body ocupen el 100% de la altura */
+        }
+
+        body {
+            display: flex; /* Usar flexbox */
+            flex-direction: column; /* Organizar elementos en una columna */
+        }
+
+    </style>
+    <body>
+        <header th:replace="~{layout/plantilla :: header}" >
+
+        </header>
+
+        <section th:replace="~{layout/plantilla :: home}">
+
+        </section>
+
+        <footer th:replace="~{layout/plantilla :: footer}">
+
+        </footer>
+
+    </body>
 </html>
