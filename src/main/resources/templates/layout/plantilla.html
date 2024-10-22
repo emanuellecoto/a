@@ -10,6 +10,7 @@
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        <script th:src="@{/js/index.js}"></script>
         <style>
             .custom-height {
                 height: 80vh;
@@ -60,6 +61,11 @@
                                     <a class="nav-item ps-2 pe-5 mx-5 text-black fs-3" href="">
                                         <i class="fa-regular fa-user"></i>
                                     </a>
+                                </li>
+                                <li class="nav-item">
+                                    <button onclick="cambiarTema(); cambiarIcono();" class=" btn nav-item ps-2 pe-5 mx-5 text-black fs-3" style="border: none;" href="">
+                                        <i id="icono_tema" class="fa-solid fa-moon"></i>
+                                    </button>
                                 </li>
                             </ul>
                         </div>
