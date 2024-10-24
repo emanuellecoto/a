@@ -10,7 +10,7 @@
         <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
         <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
         <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-        <script th:src="@{/js/index.js}"></script>
+        <script th:src="@{/js/modos.js}"></script>
         <style>
             .custom-height {
                 height: 80vh;
@@ -35,8 +35,14 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link fs-3 py-2 mx-3 text-black" aria-current="page" th:href="@{/cita/citas}">Citas</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fs-3 py-2 mx-3 text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Citas
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item"th:href="@{/cita/agendar}"><i class="fa-solid fa-tooth"></i> Agendar</a></li>
+                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tooth"></i> Ver citas</a></li>
+                                </ul>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle fs-3 py-2 mx-3 text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -45,15 +51,37 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" th:href="@{/servicios/ortodoncia}"><i class="fa-solid fa-tooth"></i> Ortodoncia</a></li>
                                     <li><a class="dropdown-item" th:href="@{/servicios/implantologia}"><i class="fa-solid fa-tooth"></i> Implantología</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tooth"></i> Cirugía Maxilofacial</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/servicios/cirugiaMaxilofacial}"><i class="fa-solid fa-tooth"></i> Cirugía Maxilofacial</a></li>
                                 </ul>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link fs-3 py-2 mx-3 text-black" aria-current="page" th:href="@{/consultorio/consultorios}">Usuarios</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fs-3 py-2 mx-3 text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Almacen
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/servicios/ortodoncia}"><i class="fa-solid fa-tooth"></i> Proveedores</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/servicios/implantologia}"><i class="fa-solid fa-tooth"></i> Inventario</a></li> 
+                                </ul>
+                            </li>     
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fs-3 py-2 mx-3 text-black" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Medico
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/servicios/ortodoncia}"><i class="fa-solid fa-tooth"></i> **</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/servicios/implantologia}"><i class="fa-solid fa-tooth"></i> **</a></li> 
+                                </ul>
+                            </li>     
                             <li class="nav-item">
                                 <a class="nav-link fs-3 py-2 mx-3 text-black" aria-current="page" th:href="@{/consultorio/consultorios}">Consultorios</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fs-3 py-2 mx-3 text-black" aria-current="page" th:href="@{/contactenos/contactenos}">Contacto</a>
-                            </li>
+                            </li> 
+
                         </ul>
                         <div>
                             <ul class="navbar-nav d-flex flex-row align-items-center">

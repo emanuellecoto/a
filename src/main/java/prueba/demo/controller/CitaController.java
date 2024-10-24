@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CitaController {
     
-    @GetMapping("/citas")
+    @GetMapping("/agendar")
     public String cita(){
-        return "/cita/citas";
+        return "/cita/agendar";
     }
     
 }
