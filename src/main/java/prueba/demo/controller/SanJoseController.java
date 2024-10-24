@@ -5,13 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/consultorio")
+@RequestMapping("/consultorios")
 @Controller
-public class ConsultorioController {
+public class SanJoseController {
+    @GetMapping("/ProvinciaSanJose")
     
-    @GetMapping("/consultorios")
-    public String consultoriosM(){
-        return "/consultorio/consultorios";
+    public String consultorio(){
+        return "/consultorios/ProvinciaSanJose";
     }
     
 }
