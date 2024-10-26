@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section th:fragment="tabla-ver-cita">
+            <div class="container text-center">
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="card my-4">
+                            <div class="card-header" style="background-color: #69BFB7">
+                                <h2 class="text-white">CITAS</h2>
+                            </div>
+                            <table class="table" >
+                                <thead class="table-info">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Paciente</th>
+                                        <th scope="col">Medico</th>
+                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Servicio</th>
+                                        <th scope="col">Consultorio</th>
+                                        <th scope="col">Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                        <td>Prueba</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4 py-5 px-3">
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="busqueda cliente" aria-label="Search">
+                            <button class="btn" style="background-color: #69BFB7" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </form>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <div class="col-sm">col-sm</div>
+                    <div class="col-sm">col-sm</div>
+                    <div class="col-sm">col-sm</div>
+                </div> -->
+            </div>
+        </section>
+    </body>
+</html>
