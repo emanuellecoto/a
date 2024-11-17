@@ -35,14 +35,19 @@
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Citas
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item"th:href="@{/cita/agendar}"><i class="fa-solid fa-tooth"></i> Agendar</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tooth"></i> Ver citas</a></li>
-                                </ul>
+                            <div>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Citas
+                                    </a>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item"th:href="@{/cita/agendar}"><i class="fa-solid fa-tooth"></i> Agendar</a></li>
+
+                                        <li><a class="dropdown-item" href="#"><i class="fa-solid fa-tooth"></i> Ver citas</a></li>
+                                    </ul>
+                            </div>
+
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -54,9 +59,18 @@
                                     <li><a class="dropdown-item" th:href="@{/servicios/cirugiaMaxilofacial}"><i class="fa-solid fa-tooth"></i> Cirugía Maxilofacial</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link active fs-4 py-2 mx-3" aria-current="page" th:href="@{/adminUsuarios/usuarios}">Usuarios</a>
-                            </li>
+                            <div th:if="${session.rol == 2 or session.rol == 3}">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Usuarios
+                                    </a>  
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" th:href="@{/adminUsuarios/usuarios}"><i class="fa-solid fa-tooth"></i>Registrar Usuario</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/adminUsuarios/lista}"><i class="fa-solid fa-tooth"></i>Lista Usuarios</a></li>
+                                    </ul>
+                                </li>
+                            </div>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Almacen
@@ -84,13 +98,31 @@
                         </ul>
                         <div>
                             <ul class="navbar-nav d-flex flex-row align-items-center">
-                                <li class="nav-item">
-                                    <a class="nav-item ps-2 pe-5 mx-5 fs-4 text-black" th:href="@{/inicioSesion/inicioSesion}">
+                                <!-- Mostrar el usuario logueado si existe en la sesión -->
+                                <li class="nav-item" th:if="${session.usuarioLogueado != null}">
+                                    <span class="nav-item fs-4 px-3 text-black">
+                                        <i class="fa-regular fa-user"></i>
+                                        <span th:text="${session.usuarioLogueado}"></span>
+                                    </span>
+                                </li>
+
+                                <!-- Botón de Logout (solo visible si el usuario está logueado) -->
+                                <li class="nav-item" th:if="${session.usuarioLogueado != null}">
+                                    <a class="btn nav-item fs-4 px-3 text-black" th:href="@{/logout}">
+                                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                                    </a>
+                                </li>
+
+                                <!-- Botón de Login (solo visible si el usuario NO está logueado) -->
+                                <li class="nav-item" th:if="${session.usuarioLogueado == null}">
+                                    <a class="btn nav-item fs-4 px-3 text-black" th:href="@{/login}">
                                         <i class="fa-regular fa-user"></i>
                                     </a>
                                 </li>
+
+                                <!-- Botón para cambiar tema -->
                                 <li class="nav-item">
-                                    <button onclick="cambiarTema(); cambiarIcono();" class=" btn nav-item ps-2 pe-5 mx-5 fs-4" style="border: none;" href="">
+                                    <button onclick="cambiarTema(); cambiarIcono();" class="btn nav-item fs-4" style="border: none;">
                                         <i id="icono_tema" class="fa-solid fa-moon"></i>
                                     </button>
                                 </li>
@@ -123,8 +155,9 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-        </section>
 
+
+        </section>
         <footer th:fragment="footer" style="background-color: #79B1DC">
             <div class="text-center">
                 <img th:src="@{/img/diente.png}" alt="alt" />

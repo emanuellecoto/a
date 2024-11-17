@@ -8,13 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/registro")
 @Controller
 public class registroController {
 
     @GetMapping("/registro")
     public String registro() {
-        return "/registro/registro";
+        return "registro";
     }
 
 }

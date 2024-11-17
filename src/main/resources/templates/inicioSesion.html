@@ -1,11 +1,50 @@
 <html>
-    <html>
-        <head th:replace = "~{layout/plantilla :: head}">
-        </head>
-        <body>
-            <header th:replace = "~{layout/plantilla :: header}"> </header>
-            <section th:replace="~{inicioSesion/inicioSesionFragmentos :: inicioSesion}"></section>
-        <footer th:replace="~{layout/plantilla :: footer}">
+    <head th:replace = "~{layout/plantilla :: head}">
 
-        </body>
-    </html>
+
+
+    <body>
+        <section>
+            <body>
+                <header th:replace="~{layout/plantilla :: header}"/>
+                <div class="title" style="padding-bottom: 10px">
+                    <h1 style="text-align: center;">Inicio de Sesion</h1>
+                    <p style="text-align: center">inicia sesion gratis acá</p>
+                </div>
+                <div class="container__reg" style=" display: flex; justify-content: center; align-items: center;  ">
+                    <div class="container"  style="width: 100%; max-width: 400px;  background-color: #f9f9f9; padding: 20px;  border-radius: 10px;">
+                        <form  class="row g-3"   method="POST" action="/loginUser"> 
+                            <div class="usuario">
+                                <label for="correo" class="form-label text-black">Correo</label>
+                                <input type="email" class="form-control" id="correo" name="correo">
+                            </div>
+
+                            <div class="password">
+                                <label for="contra" class="form-label text-black">Contraseña</label>
+                                <input type="password" class="form-control" id="contra" name="contra">
+                            </div>
+                            <div class="col-12 d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" style="background-color: #3C9A89; border-color: #3C9A89; color: white;">
+                                    <i class="fa-solid fa-user-large mx-1"></i>Iniciar Sesión
+                                </button>
+                            </div>
+                            <div th:if="${param.error != null}" class="col-12 mt-3">
+                                <h3 class="text-danger text-center">No se pudo inicar sesion</h3>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center py-2" >
+                    <a th:href="@{/registro}" style="text-decoration: none;">¿Aún no tienes cuenta? Registrate acá</a>
+                     <h1 class="text-center" th:text="${message}"></h1>
+                </div>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
+                <footer th:replace="~{layout/plantilla :: footer}"/>
+            </body>
+</html>
