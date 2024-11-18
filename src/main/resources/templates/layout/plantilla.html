@@ -65,29 +65,36 @@
                                         Usuarios
                                     </a>  
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" th:href="@{/adminUsuarios/usuarios}"><i class="fa-solid fa-tooth"></i>Registrar Usuario</a></li>
+                                        <div th:if="${session.rol == 2}">
+                                            <li><a class="dropdown-item" th:href="@{/adminUsuarios/usuarios}"><i class="fa-solid fa-tooth"></i>Registrar Usuario</a></li>
+                                        </div>
                                         <li><a class="dropdown-item" th:href="@{/adminUsuarios/lista}"><i class="fa-solid fa-tooth"></i>Lista Usuarios</a></li>
                                     </ul>
                                 </li>
                             </div>
+                            <div th:if="${session.rol == 2 or session.rol == 3 or session.rol == 4}">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Almacen
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" th:href="@{/proveedores/inventario}"><i class="fa-solid fa-tooth"></i> Proveedores</a></li>
+                                        <li><a class="dropdown-item" th:href="@{/proveedores/inventario}"><i class="fa-solid fa-tooth"></i> Inventario</a></li> 
+                                    </ul>
+                                </li>     
+                            </div>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Almacen
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/proveedores/inventario}"><i class="fa-solid fa-tooth"></i> Proveedores</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/proveedores/inventario}"><i class="fa-solid fa-tooth"></i> Inventario</a></li> 
-                                </ul>
-                            </li>     
-                            <li class="nav-item dropdown">
-                                <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Personal
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" th:href="@{/empleados/personal}"><i class="fa-solid fa-tooth"></i>  empleados</a></li>
-                                </ul>
-                            </li>     
+                            <div th:if="${session.rol == 2 or session.rol == 3}">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link active dropdown-toggle fs-4 py-2 mx-3" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Personal
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" th:href="@{/empleados/personal}"><i class="fa-solid fa-tooth"></i>  empleados</a></li>
+                                    </ul>
+                                </li>    
+                            </div>
+
                             <li class="nav-item">
                                 <a class="nav-link active fs-4 py-2 mx-3" aria-current="page" th:href="@{/consultorio/consultorios}">Consultorios</a>
                             </li>

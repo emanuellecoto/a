@@ -82,7 +82,7 @@ public class UsuarioController {
             e.printStackTrace();
             model.addAttribute("message", "Error al registrar usuario");
             System.out.println(e.getMessage());
-            return "/inicioSesion";
+            return "/registro";
         }
     }
     

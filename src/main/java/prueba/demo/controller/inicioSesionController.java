@@ -59,10 +59,10 @@ public String loginUsuario(@RequestParam String correo,
                            Model model,
                            HttpSession session) {
     try {
-        // Generar el hash de la contraseña ingresada
+
         String hashedPassword = generarHash(contra);
 
-        // Verificar si el correo existe
+    
         String verificarEmail = "SELECT COUNT(*) FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
         int contador = jdbctemplate.queryForObject(verificarEmail, Integer.class, correo);
 
@@ -71,7 +71,7 @@ public String loginUsuario(@RequestParam String correo,
             return "inicioSesion";
         }
 
-        // Recuperar el hash de la contraseña, nombre y estado del usuario
+   
         String obtenerContrasenaHash = "SELECT CONTRASEÑA FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
         String obtenerNombre = "SELECT NOMBRE FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
         String obtenerEstado = "SELECT ID_ESTADO FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
@@ -88,7 +88,7 @@ public String loginUsuario(@RequestParam String correo,
             return "inicioSesion";
         }
 
-        // Comparar los hashes de la contraseña
+
         if (hashedPassword.equals(contrasenaAlmacenada)) {
            
             session.setAttribute("usuarioLogueado", nombreAlmacenado);
