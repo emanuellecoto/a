@@ -10,64 +10,64 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <section th:fragment="inventario">
+
+        <section th:fragment="reporte">
             <div class="container text-center">
                 <div class="row">
                     <div class="col-sm-8">
-                        <div class="card my-4">
+                        <div class="card">
                             <div class="card-header" style="background-color: #69BFB7">
-                                <h2 class="text-white">INVENTARIO</h2>
+                                <h2 class="text-white">DIAGNOSTICOS</h2>
                             </div>
-                            <table class="table" >
-                                <thead class="table-info">
+                            <table class="table">
+                                <thead>
                                     <tr>
                                         <th scope="col">#</th>
-                                        <th scope="col">Productos</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Proveedor</th>                  
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">Cédula</th>
+                                        <th scope="col">Diagnostico</th>
+                                        <th scope="col">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                             
+                                        <td>Arito</td>
+                                        <td>Flower</td>
+                                        <td>604880953</td>
+                                        <td>receta de amoxapina</td>
+                                        <td>Activa</td>
+
                                     </tr>
                                     <tr>
                                         <th scope="row">2</th>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                              
+                                        <td>Emanuel</td>
+                                        <td>Perez</td>
+                                        <td>104440333</td>
+                                        <td>receta de pastillas para relajarse</td>
+                                        <td>activo</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-
                     </div>
-                      <div class="col-sm-4">
+                    <div class="col-sm-4">
                         <form class="d-flex" role="search">
                             <input class="form-control me-2" type="search" placeholder="busqueda cliente" aria-label="Search">
                             <button class="btn" style="background-color: #69BFB7" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
                         </form>
                         <br>
-                        <br>
-                        <div class="text-center py-3">
+                        <div class="text-center">
                             <button class="btn" style="background-color: #69BFB7" type="submit">Agregar</button>
-                        </div>
-                        <div class="text-center py-3">
-                            <button class="btn" style="background-color: #69BFB7" type="submit">Modificar</button>
-                        </div>
-                        <div class="text-center py-3">
-                            <button class="btn" style="background-color: #69BFB7" type="submit">Eliminar</button>
                         </div>
                     </div>
                 </div>
-        
             </div>
+
         </section>
+
+
 
     </body>
 </html>
