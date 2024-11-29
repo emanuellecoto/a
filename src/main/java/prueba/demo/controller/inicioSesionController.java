@@ -19,6 +19,9 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpSession;
+import java.sql.CallableStatement;
+import java.util.HashMap;
+import org.springframework.jdbc.core.SqlTypeValue;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.ui.Model;
@@ -36,82 +39,71 @@ public class inicioSesionController {
         return "inicioSesion";
     }
 
-
-    private String generarHash(String contrasena) {
+    @PostMapping("/loginUser")
+    public String iniciarSesion(@RequestParam String correo,
+            @RequestParam String contra,
+            Model model,
+            HttpSession session) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = digest.digest(contrasena.getBytes(StandardCharsets.UTF_8));
-            // Convertir el byte[] a una cadena hexadecima
-            StringBuilder hexString = new StringBuilder();
-            for (byte b : hashBytes) {
-                hexString.append(String.format("%02x", b));
+            // Generar el hash de la contraseña en formato RAW (SHA-256)
+            byte[] contraHash = MessageDigest.getInstance("SHA-256").digest(contra.getBytes(StandardCharsets.UTF_8));
+
+            // Crear el SimpleJdbcCall para el procedimiento almacenado
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbctemplate)
+                    .withCatalogName("FIDE_CLINICA_DENTAL_PROCEDURES_PKG") // Nombre del paquete
+                    .withProcedureName("USUARIO_VALIDAR_USUARIO_SP") // Nombre del procedimiento
+                    .declareParameters(
+                            new SqlParameter("V_EMAIL", Types.VARCHAR),
+                            new SqlParameter("V_CONTRASENA", Types.BINARY), // RAW es representado por BINARY en JDBC
+                            new SqlOutParameter("V_RESULTADO", Types.INTEGER)
+                    );
+
+            // Parámetros para la llamada al procedimiento
+            Map<String, Object> inParams = new HashMap<>();
+            inParams.put("V_EMAIL", correo);
+            inParams.put("V_CONTRASENA", contraHash);
+
+            // Ejecutar la llamada al procedimiento y obtener el resultado
+            Map<String, Object> outParams = jdbcCall.execute(inParams);
+
+            // Obtener el parámetro de salida V_RESULTADO
+            Integer resultado = (Integer) outParams.get("V_RESULTADO");
+
+            String obtenerNombre = "SELECT NOMBRE FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
+            String obtenerEstado = "SELECT ID_ESTADO FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
+            String obtenerRole = "SELECT ID_ROLE FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
+
+            String nombreAlmacenado = jdbctemplate.queryForObject(obtenerNombre, String.class, correo);
+            String estadoAlmacenado = jdbctemplate.queryForObject(obtenerEstado, String.class, correo);
+            Long obtenerRoleAlmacenado = jdbctemplate.queryForObject(obtenerRole, Long.class, correo);
+
+            if (estadoAlmacenado.equalsIgnoreCase("I")) {
+                model.addAttribute("message", "Cuenta inactiva, comuníquese con un asesor.");
+
+                return "inicioSesion";
             }
-            return hexString.toString();
-        } catch (NoSuchAlgorithmException e) {
+
+            // Verificar el resultado de la validación
+            if (resultado != null && resultado == 1) {
+                model.addAttribute("message", "Inicio de sesión exitoso");
+                session.setAttribute("usuarioLogueado", nombreAlmacenado);
+                session.setAttribute("rol", obtenerRoleAlmacenado);
+                return "/index"; // Página de inicio
+            } else {
+                model.addAttribute("message", "Correo o contraseña incorrectos");
+                return "/inicioSesion"; // Página de inicio de sesión
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;  // En caso de error, devolver null
+            model.addAttribute("message", "Error al iniciar sesión");
+            return "/inicioSesion";
         }
     }
-
-@PostMapping("/loginUser")
-public String loginUsuario(@RequestParam String correo,
-                           @RequestParam String contra,
-                           Model model,
-                           HttpSession session) {
-    try {
-
-        String hashedPassword = generarHash(contra);
-
-    
-        String verificarEmail = "SELECT COUNT(*) FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
-        int contador = jdbctemplate.queryForObject(verificarEmail, Integer.class, correo);
-
-        if (contador == 0) {
-            model.addAttribute("message", "Usuario no encontrado.");
-            return "inicioSesion";
-        }
-
-   
-        String obtenerContrasenaHash = "SELECT CONTRASEÑA FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
-        String obtenerNombre = "SELECT NOMBRE FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
-        String obtenerEstado = "SELECT ID_ESTADO FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
-        String obtenerRole  = "SELECT ID_ROLE FROM FIDE_USUARIO_TB WHERE EMAIL = ?";
-                
-        String contrasenaAlmacenada = jdbctemplate.queryForObject(obtenerContrasenaHash, String.class, correo);
-        String nombreAlmacenado = jdbctemplate.queryForObject(obtenerNombre, String.class, correo);
-        String estadoAlmacenado = jdbctemplate.queryForObject(obtenerEstado, String.class, correo);
-        Long obtenerRoleAlmacenado = jdbctemplate.queryForObject(obtenerRole, Long.class, correo);
-
-
-        if (estadoAlmacenado.equalsIgnoreCase("I")) {
-            model.addAttribute("message", "Cuenta inactiva, comuníquese con un asesor.");
-            return "inicioSesion";
-        }
-
-
-        if (hashedPassword.equals(contrasenaAlmacenada)) {
-           
-            session.setAttribute("usuarioLogueado", nombreAlmacenado);
-            session.setAttribute("rol", obtenerRoleAlmacenado);
-          
-            return "index"; // Redirigir al inicio si el login es exitoso
-        } else {
-            model.addAttribute("message", "Contraseña incorrecta.");
-            return "inicioSesion";
-        }
-
-    } catch (Exception e) {
-        e.printStackTrace();
-        model.addAttribute("message", "Error al procesar login.");
-        return "inicioSesion";
-    }
-}
-
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); // Invalida la sesión actual
-        return "inicioSesion"; // Redirige a la página de inicio de sesión
+        session.invalidate();
+        return "inicioSesion";
     }
-
 }

@@ -38,7 +38,7 @@ public class Usuario {
     @Column(name = "ID_ESTADO")
     private String idEstado;
     @Column(name = "CONTRASEÑA")
-    private String contraseña;
+    private byte[] contraseña;
 
 
     
