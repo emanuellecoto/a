@@ -16,6 +16,5 @@ public interface UsuarioService {
     
     public List<Usuario> getUser();
     
-    public List<Object[]> buscarUsuarioPorId(Long idUsuario);
-    
+
 }

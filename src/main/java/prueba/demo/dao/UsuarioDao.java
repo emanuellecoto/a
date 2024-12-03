@@ -4,7 +4,10 @@
  */
 package prueba.demo.dao;
 
+
 import org.springframework.data.jpa.repository.JpaRepository;
+
+
 import prueba.demo.domain.Usuario;
 
 /**
@@ -13,6 +16,6 @@ import prueba.demo.domain.Usuario;
  */
 public interface UsuarioDao extends JpaRepository<Usuario, Long>{
     
-    
+   
     
 }
