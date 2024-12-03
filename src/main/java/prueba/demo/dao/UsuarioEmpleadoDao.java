@@ -5,14 +5,9 @@
 package prueba.demo.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import prueba.demo.domain.Usuario;
+import prueba.demo.domain.UsuarioEmpleado;
 
-/**
- *
- * @author emanu
- */
-public interface UsuarioDao extends JpaRepository<Usuario, Long>{
-    
-    
+
+public interface UsuarioEmpleadoDao extends JpaRepository<UsuarioEmpleado, Long>{
     
 }

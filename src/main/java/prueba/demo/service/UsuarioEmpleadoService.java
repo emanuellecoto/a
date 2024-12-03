@@ -2,17 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package prueba.demo.dao;
+package prueba.demo.service;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import prueba.demo.domain.Usuario;
+import java.util.List;
+
+import prueba.demo.domain.UsuarioEmpleado;
 
 /**
  *
  * @author emanu
  */
-public interface UsuarioDao extends JpaRepository<Usuario, Long>{
+public interface UsuarioEmpleadoService {
     
-    
+        public List<UsuarioEmpleado> getUser();
     
 }

@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpSession;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Types;
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,12 +76,24 @@ public class adminUsuariosController {
     }
 
     @PostMapping("/adminUsuario/cambioRol")
-    public String cambioRol(@RequestParam("idUsuario") Long IdUsuario, @RequestParam("rolId") Long rolId, Model model) {
+    public String cambioRol(@RequestParam("idUsuario") Long IdUsuario, @RequestParam("rolId") Long rolId,  Model model) {
 
         try {
             String ProcedureRole = "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_ASIGNAR_OTRO_ROLE_SP(?, ?)}";
             jdbctemplate.update(ProcedureRole, IdUsuario, rolId);
-            model.addAttribute("cambio", "Cambio de rol realizado con exito");
+                             String ProcedureUpdate = "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_OBTENER_UPDATE_ID_USUARIO_SP(?, ?)}";
+                  jdbctemplate.update(ProcedureUpdate, IdUsuario, rolId);
+            model.addAttribute("cambio", "Cambio  realizado con exito");
+            if (rolId == 2) {
+                   String ProcedureAdmin = "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_OBTENER_ID_USUARIO_SP(?)}";
+                   jdbctemplate.update(ProcedureAdmin, IdUsuario);
+                   
+            }
+
+                  
+      
+            
+
         } catch (Exception e) {
             model.addAttribute("cambio", "ocurrio un error");
         }
@@ -87,4 +101,65 @@ public class adminUsuariosController {
         return "/adminUsuarios/usuarios";
 
     }
+    
+@PostMapping("/adminUsuario/cambioUsuario")
+public String cambioUsuario(
+        @RequestParam("idUsuario") Long idUsuario,
+        @RequestParam Map<String, String> allParams,
+        Model model) {
+
+    try {
+        // Filtrar solo los parámetros relevantes (excluir idUsuario)
+        Map<String, String> camposAActualizar = allParams.entrySet().stream()
+                .filter(entry -> !"idUsuario".equals(entry.getKey()) && entry.getValue() != null && !entry.getValue().trim().isEmpty())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        // Verificar si hay campos para actualizar
+        if (camposAActualizar.isEmpty()) {
+            model.addAttribute("cambio", "No se proporcionó información válida para actualizar.");
+            return "/adminUsuarios/usuarios";
+        }
+
+        // Llamar al procedimiento adecuado según los campos presentes
+        if (camposAActualizar.size() == 3) {
+            // Actualizar todos los campos
+            String procedureTodo = "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_EDITAR_TODO_SP(?,?,?,?)}";
+            jdbctemplate.update(procedureTodo, idUsuario, 
+                                camposAActualizar.get("nombre"), 
+                                camposAActualizar.get("apellido"), 
+                                camposAActualizar.get("sapellido"));
+
+        } else {
+            // Actualizar campos individuales
+            camposAActualizar.forEach((campo, valor) -> {
+                String procedure = obtenerProcedureParaCampo(campo);
+                jdbctemplate.update(procedure, idUsuario, valor);
+            });
+        }
+
+        model.addAttribute("cambio", "Usuario actualizado correctamente.");
+
+    } catch (Exception e) {
+        model.addAttribute("cambio", "Error al actualizar el usuario: " + e.getMessage());
+    }
+
+    return "/adminUsuarios/usuarios";
+}
+
+private String obtenerProcedureParaCampo(String campo) {
+    switch (campo) {
+        case "nombre":
+            return "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_EDITAR_NOMBRE_SP(?,?)}";
+        case "apellido":
+            return "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_EDITAR_PRIMER_APELLIDO_SP(?,?)}";
+        case "sapellido":
+            return "{call FIDE_CLINICA_DENTAL_PROCEDURES_PKG.USUARIO_EDITAR_SEGUNDO_APELLIDO_SP(?,?)}";
+        default:
+            throw new IllegalArgumentException("Campo no soportado: " + campo);
+    }
+}
+
+
+    
+    
 }

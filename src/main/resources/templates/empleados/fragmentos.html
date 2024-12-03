@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -22,30 +18,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
+                                        <th scope="col">id</th>
                                         <th scope="col">Nombre</th>
-                                        <th scope="col">Servicio</th>
-                                        <th scope="col">Eliminar</th>
-                                        <th scope="col">Actualizar</th>
+                                        <th scope="col">P Apellido</th>
+                                        <th scope="col">S Apellido</th>
+                                        <th scope="col">Rol</th>
+                                        <th scope="col">Salario</th>
                                         <th scope="col">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
-                                        <td>Prueba</td>
+                                    <tr th:each="listar : ${listar}">
+                                        <td>[[${listar.id}]]</td>
+                                        <td>[[${listar.idUsuario}]]</td>
+                                        <td>[[${listar.nombre}]]</td>
+                                        <td>[[${listar.primerApellido}]]</td>
+                                        <td>[[${listar.segundoApellido}]]</td>
+                                        <td>[[${listar.rol}]]</td>
+                                        <td>[[${listar.salario}]]</td>
+                                        <td>[[${listar.estado}]]</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -64,7 +55,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     </div>
                 </div>
             </div>
-
         </section>
     </body>
 </html>

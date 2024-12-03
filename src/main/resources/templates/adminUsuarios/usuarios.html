@@ -12,4 +12,30 @@
 
         </footer>
     </body>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formRol = document.getElementById("formRol");
+        const formUsuario = document.getElementById("formUsuario");
+        const btnRol = document.getElementById("rolcito");
+        const btnUsuario = document.getElementById("usercito");
+
+        // Inicialmente, muestra solo el formulario de Rol
+        formRol.style.display = "none";
+        formUsuario.style.display = "none";
+
+        // Función para alternar formularios
+        btnRol.addEventListener("click", function () {
+            formRol.style.display = "block";
+            formUsuario.style.display = "none";
+        });
+
+        btnUsuario.addEventListener("click", function () {
+            formRol.style.display = "none";
+            formUsuario.style.display = "block";
+        });
+    });
+    
+    
+</script>
 </html>
